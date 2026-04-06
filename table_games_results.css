@@ -1,0 +1,112 @@
+/* --- RESULTS PANEL (float right) --- */
+table.results {
+    min-width: 700px;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 16px;
+    overflow: hidden; /* keeps rounded corners for rows */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+table.results caption {
+    caption-side: top;
+    text-align: left;
+    padding: 12px 14px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    border-bottom: 1px solid;
+}
+
+table.results th,
+table.results td {
+    padding: 10px 12px;
+    font-size: 22px;
+    line-height: 1.25;
+}
+
+table.results th {
+    text-align: left;
+    font-weight: 700;
+    white-space: nowrap;
+    max-width: 300px;
+}
+
+table.results td {
+    text-align: left;
+    font-weight: 800;
+    letter-spacing: .02em;
+}
+table.results td.column3 {
+    width: 50%;
+}
+
+/* Last row: no border line */
+table.results tr:last-child th,
+table.results tr:last-child td{
+    border-bottom: none;
+}
+
+/* Optional “badge” look for values */
+table.results td {
+    position: relative;
+}
+table.results td:empty::after {
+    content: "—";
+    opacity: .65;
+    font-weight: 700;
+}
+
+/* Responsive: stop floating on small screens */
+@media (max-width: 820px) {
+    table.results {
+        float: none;
+        width: min(520px, 100%);
+        margin: 18px 0 26px;
+    }
+}
+
+/* Example status colors (use by setting td class in JS if you want)
+table.results td.win{ color: #75ff9b; }
+table.results td.lose{ color: #ff6b6b; }
+table.results td.push{ color: #ffd166; }
+table.results td.ok{ color: #7bdff2; }
+*/
+
+/* colors themes */
+
+body.green table.results {
+    background: rgba(255,255,255,.08);
+    border: rgba(255,255,255,.18);
+    box-shadow: 0 14px 28px rgba(0,0,0,.35);
+}
+
+body.green table.results caption {
+    color: rgba(255,255,255,.95);
+    background: rgba(0,0,0,.18);
+    border-bottom: rgba(255,255,255,.12);
+}
+
+body.green table.results th,
+body.green table.results td {
+    border-bottom: 1px solid rgba(255,255,255,.10);
+}
+
+body.green table.results th {
+    color: rgba(255,255,255,.90);
+}
+
+body.green table.results td {
+    color: #fff;
+}
+
+/* Subtle row striping */
+body.green table.results tr:nth-child(even) th,
+body.green table.results tr:nth-child(even) td {
+    background: rgba(255,255,255,.06);
+}
+
+
+
+

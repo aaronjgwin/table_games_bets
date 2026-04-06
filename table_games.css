@@ -1,0 +1,157 @@
+
+@import "table_games_cards.css";
+@import "table_games_results.css";
+
+ /* Page/table layout (optional but makes it look nicer) */
+ body {
+   /* defaults */
+   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+   /* page layouts */
+   align-items: flex-start; /* top align (better for wrapping layouts) */
+   box-sizing: border-box;
+   display: flex;
+   justify-content: center; /* horizontal center */
+   margin: 0;
+   min-height: 99vh; /* Fill the entire viewport height */
+   padding: 24px;
+ }
+
+/* Make sure content clears the float after your tables */
+body::after{
+  content:"";
+  display:block;
+  clear:both;
+}
+
+div.gaming_table {}
+
+h1#pageTitle {
+  text-align:center;
+}
+
+div#results_container {}
+
+/*
+///////////////////////////////////////////////////////////////////////////////////////////
+ Cards Container, top-row, & table.cards                        see table_games_cards.css
+///////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+
+
+/*
+///////////////////////////////////////////////////////////////////////////////////////////
+  Table Results                                               see table_games_results.css
+///////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+span.answer, div.answer {
+  visibility: hidden;
+}
+.show span.answer, .show div.answer {
+  visibility: visible;
+}
+
+/*
+///////////////////////////////////////////////////////////////////////////////////////////
+  Buttons
+///////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+div.buttons {
+  text-align:center;
+}
+
+/* Unified style for both buttons using a lighter poker-green theme */
+div.buttons button.submit,
+div.buttons button.reload {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 2px solid;
+  border-radius: 12px;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 14px 30px;
+  margin: 20px;
+  transition: all 0.2s ease;
+}
+
+/* Hover: Increased brightness and lift */
+div.buttons button.submit:hover,
+div.buttons button.reload:hover {
+  transform: translateY(-2px);
+}
+
+/* Active: Pressed state */
+div.buttons button.submit:active,
+div.buttons button.reload:active {
+  transform: translateY(1px);
+}
+
+.show div.buttons button.submit,
+div.buttons button.reload {
+  display: none;
+}
+.show div.buttons button.reload,
+div.buttons button.submit {
+  display: inline-block;
+}
+
+/*
+///////////////////////////////////////////////////////////////////////////////////////////
+  Hands Results
+///////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+div#handsResults.results div.answer {
+  text-align:center;
+}
+div#handsResults.results div.answer label {
+  margin: 10px;
+  font-weight: 400;
+}
+
+/*
+///////////////////////////////////////////////////////////////////////////////////////////
+  Colors Themes
+///////////////////////////////////////////////////////////////////////////////////////////
+*/
+
+body.green {
+  background: radial-gradient(circle at top, #1b7a44 0%, #0b3d22 60%, #072714 100%);
+  background-color: #072714;
+  background-attachment: fixed; /* Keeps gradient from resetting when scrolling */
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+body.green div.buttons button.submit,
+body.green div.buttons button.reload {
+  background: rgba(46, 204, 113, 0.25);
+  border-color: rgba(46, 204, 113, 0.5);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  color: #fff;
+}
+
+body.green div.buttons button.submit:hover,
+body.green div.buttons button.reload:hover {
+  background: rgba(46, 204, 113, 0.4);
+  border-color: #58d68d;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+body.green div.buttons button.submit:active,
+body.green div.buttons button.reload:active {
+  background: rgba(46, 204, 113, 0.15);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+
+
+

@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Table Games Layout</title>
+
+  <link rel="stylesheet" href="table_games.css">
+
+  <script src="table_games.js"></script>
+  <script src="deck.js"></script>
+  <script src="ui_elements.js"></script>
+
+  <script>
+    let typeVar = null, gameVar = getUrlVar("game");
+
+    switch(gameVar){
+      case "MiniBac":
+      case "EzBac":
+      case "EternalBac":
+        typeVar = "baccarat"; break;
+      case "3CardPoker":
+      case "Blackjack":
+      case "TexasHoldem":
+      case "HighCardFlush":
+      case "HeadsUpHoldem":
+        typeVar = "poker"; break;
+      default: break;
+    }
+    if(typeVar !== null){
+      document.write('<script src="' + typeVar +  '.js"'); document.write("></"); document.write("scr"+"ipt>");
+    }
+
+    switch (typeVar){
+      case "baccarat":
+        document.write('<script src="MiniBac.js"'); document.write("></"); document.write("scr"+"ipt>");
+        break;
+      default:
+        break;
+    }
+
+    if(gameVar!=="MiniBac" && typeVar !== null){
+      switch(gameVar){
+        case "EzBac":                  gameVar = "EzBac"; break;
+        case "EternalBac":             gameVar = "EternalBac"; break;
+        case "3CardPoker":             gameVar = "3CardPoker"; break;
+        case "Blackjack":              gameVar = "Blackjack"; break;
+        case "TexasHoldem":            gameVar = "TexasHoldem"; break;
+        case "HighCardFlush":          gameVar = "HighCardFlush"; break;
+        case "HeadsUpHoldem":          gameVar = "HeadsUpHoldem"; break;
+        default: break;
+      }
+      document.write('<script src="' + gameVar +  '.js"'); document.write("></"); document.write("scr"+"ipt>");
+    }
+
+
+    function addParamAndReload(game, cards) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("game", game);
+      url.searchParams.set("set", cards);
+      window.location.href = url.toString();
+    }
+
+  </script>
+
+  <script>
+  function loadPage(){
+
+    // page title
+    document.title = gameTitle;
+    document.getElementById("pageTitle").textContent = gameTitle;
+    document.getElementById("gaming_table").classList.add(game);
+
+    //
+    if(typeVar !== null) {
+      shuffleDeck();
+      deal();
+
+      let cardsContainer = document.getElementById("cards_container");
+      for (let group in cardGroups) {
+        let tbl = createCardGroupsHtml(cardGroups[group]);
+        if (tbl != null) {
+          cardsContainer.appendChild(tbl);
+        }
+      }
+
+
+      let tableResults = document.getElementById("results");
+      for (let result in results) {
+        let row = createResultsTableRowHtml(results[result]);
+        if (row != null) {
+          tableResults.appendChild(row);
+        }
+      }
+
+      let handsResults = document.getElementById("handsResults");
+      for (let handId in hands) {
+        let row = createHandResultsHtml(hands[handId]);
+        if (row != null) {
+          handsResults.appendChild(row);
+        }
+      }
+    }else{
+      document.getElementById("gameSelection").onchange = (e) => {
+        document.getElementById("setCardsBuilder").innerHTML="";
+        const config = urlGroupConfig[e.target.value];
+        urlBuilder(config);
+      };
+      function getCardBuilderValues() {
+        const container = document.getElementById('setCardsBuilder');
+        const tables = container.querySelectorAll('table');
+        let cardStrings = [];
+        let isValid = true;
+
+        tables.forEach((table, index) => {
+          const selects = table.querySelectorAll('select');
+          // Assuming first select is value/rank, second is suit
+          const rank = selects[0].value;
+          const suit = selects[1].value;
+          const tableName = table.querySelector('caption')?.innerText || `#${index + 1}`;
+
+          // CHECK: If one is selected, both must be selected
+          if ((rank && !suit) || (!rank && suit)) {
+            alert(`Incomplete card at ${tableName}. Please select both rank and suit.`);
+            isValid = false;
+          }
+          // If both are selected, add to our list
+          else if (rank && suit) {
+            cardStrings.push(`${rank}${suit}`);
+          }
+        });
+
+        // If any card was incomplete, return null to signal failure
+        return isValid ? cardStrings.join(',') : null;
+      }
+
+      function saveAndReload() {
+        const cardData = getCardBuilderValues();
+
+        // Only proceed if validation passed (cardData is not null)
+        if (cardData !== null) {
+          const url = new URL(window.location.href);
+          url.searchParams.set('cards', cardData);
+          window.location.href = url.toString();
+        }
+      }
+
+      document.getElementById("setUrlBtn").onclick = function (){
+        function getCardBuilderValues() {
+          const container = document.getElementById('setCardsBuilder');
+          const tables = container.querySelectorAll('table');
+
+          const cards = Array.from(tables).map(table => {
+            const selects = table.querySelectorAll('select');
+            // Combine value (e.g., 'A') and suit (e.g., 's')
+            const rank = selects[0].value;
+            const suit = selects[1].value;
+
+            // Only return the string if both values are selected
+            return rank && suit ? `${rank}${suit}` : '';
+          }).filter(card => card !== ''); // Remove empty entries if a card isn't fully selected
+
+
+          return cards.join(',');
+        }
+        let selectedGame = document.getElementById('gameSelection').value;
+        addParamAndReload(selectedGame === "ThreeCardPoker" ? "3CardPoker" : selectedGame, getCardBuilderValues());
+      }
+
+    }
+  }
+  </script>
+  <style>
+    #gaming_table .nav h2 {
+      text-decoration: underline;
+    }
+    #gaming_table:not(.table_games) .nav h2,
+    #gaming_table:not(.table_games) footer {
+      display: none;
+    }
+    #gaming_table.table_games .nav a {
+      font-size: xx-large;
+      display: block;
+    }
+    #gaming_table.table_games #cards_container,
+    #gaming_table.table_games #results_container {
+      display: none;
+    }
+
+
+    /* Centering Method: text-align on the parent */
+    .nav {
+      text-align: center;         /* Centers all inline-block children */
+      /*background: rgba(0, 0, 0, 0.1);*/
+      padding: 3px 15px;
+      border-radius: 8px;
+      /*border: 1px solid #ffffff33;*/
+      margin: 50px 0 0 0;
+    }
+
+    /* Link styling */
+    .nav a {
+      display: inline-block;      /* Allows padding/margin while staying on one line */
+      padding: 5px 10px;
+      margin: 0 10px;             /* Even spacing between links */
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid transparent;
+      transition: all 0.3s ease;  /* Smooth hover transition */
+      opacity: 0.6;
+    }
+
+    /* Hover effects similar to table_games.css */
+    .nav a[href]:hover {
+      background-color: #ffffff22;
+      border: 1px solid #ffffff;
+      border-radius: 4px;
+    }
+
+    /* Style for the 'active' game or text without href */
+    .nav a:not([href]) {
+      opacity: 0.4;
+      cursor: default;
+    }
+    .nav a[href]:active {
+      background-color: #ffffff44; /* Slightly brighter highlight */
+      transform: translateY(2px);   /* Visual "click" or "press" effect */
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5); /* Inner shadow for depth */
+      transition: transform 0.1s;    /* Snappy response for the click */
+    }
+
+
+  </style>
+</head>
+<body class="green">
+  <div id="gaming_table">
+    <h1 id="pageTitle">Javascript is required for this page</h1>
+    <div id="cards_container" class="top-row"></div>
+    <div id="results_container">
+      <table id="results" class="results"><caption>RESULTS: Assume all bets are placed.</caption></table>
+      <div class="buttons">
+        <button class="submit" onclick="document.getElementById('results_container').className = 'show';">Show Answers</button>
+        <button class="reload" onclick="window.location.reload();">Next Example</button>
+      </div>
+      <div id="handsResults" class="results"></div>
+    </div>
+    <div class="nav">
+      <h2 id="pageSubtitle">Select a Game with random cards:</h2>
+      <a href="?game=Blackjack">Blackjack</a>
+      <a href="?game=MiniBac">Mini Bac</a>
+      <a href="?game=EzBac">EZ Bac</a>
+      <a href="?game=EternalBac">Eternal Bac</a>
+      <a href="?game=TexasHoldem">Texas Hold'em</a>
+      <a href="?game=HeadsUpHoldem">Heads Up Hold'em</a>
+      <a href="?game=3CardPoker">3 Card Poker</a>
+      <a href="?game=HighCardFlush">High Card Flush</a>
+    </div>
+    <footer>
+      <h2><label for="gameSelection"> Or set your cards here:</label>
+        <select id="gameSelection" name="gameSelection">
+          <option selected disabled> - </option>
+          <option value="Blackjack">Blackjack</option>
+          <option value="MiniBac">Mini Bac</option>
+          <option value="EzBac">EZ Bac</option>
+          <option value="EternalBac">Eternal Bac</option>
+          <option value="TexasHoldem">Texas Holdem</option>
+          <option value="HeadsUpHoldem">Heads Up Holdem</option>
+          <option value="ThreeCardPoker">Three Card Poker</option>
+          <option value="HighCardFlush">High Card Flush</option>
+        </select>
+        <button id="setUrlBtn">Set</button>
+      </h2>
+      <div id="setCardsBuilder"></div>
+    </footer>
+  </div>
+<script>
+  loadPage();
+</script>
+
+
+</body>
+</html>
