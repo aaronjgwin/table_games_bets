@@ -2,6 +2,10 @@
 
 A web-based training platform designed to test and refine the speed and accuracy of **bet payout calculations**. This tool is built specifically for **casino dealers** and **surveillance officers** to ensure mastery of floor operations through interactive drills.
 
+## 🔗 Live Demo
+Access the training tool directly in your browser:
+**[ajgwin.com/table_games_bets](http://ajgwin.com)**
+
 ## 🚀 Features
 
 *   **Training Simulations**: Real-world scenarios to test user knowledge of complex bet payouts and game flow.
