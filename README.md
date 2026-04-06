@@ -4,7 +4,7 @@ A web-based training platform designed to test and refine the speed and accuracy
 
 ## 🔗 Live Demo
 Access the training tool directly in your browser:
-**[ajgwin.com/table_games_bets](http://ajgwin.com)**
+**[ajgwin.com/table_games_bets](http://ajgwin.com/table_games_bets)**
 
 ## 🚀 Features
 
