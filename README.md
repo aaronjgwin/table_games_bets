@@ -39,8 +39,8 @@ The application is built on a modular, object-oriented JavaScript framework desi
 
 ### Core Class Structure
 *   **`deck.js`**: Managed by the `Deck` class. It handles the generation of standard 52-card sets, shuffling algorithms, and the `deal()` method for distributing cards to players and dealers.
-*   **`table_games.js`**: The base engine. It defines the generic lifecycle of a round (Wager -> Deal -> Evaluate -> Payout) which specific game modules inherit.
-*   **`ui_elements.js`**: Decouples the logic from the DOM. It manages card animations, chip stack visualizations, and real-time bankroll updates.
+*   **`table_games.js`**: The base engine and acts as an orchestrator.
+*   **`ui_elements.js`**: Decouples the logic from the DOM. .
 
 ### Hand Evaluation Logic
 The engine uses specialized evaluators to process game-specific win conditions:
