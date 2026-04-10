@@ -38,7 +38,7 @@ Access the training tool directly in your browser:
 The application is built on a modular, object-oriented JavaScript framework designed to separate game rules from the user interface.
 
 ### Core Class Structure
-*   **`deck.js`**: Managed by the `Deck` class. It handles the generation of standard 52-card sets, shuffling algorithms, and the `deal()` method for distributing cards to players and dealers.
+*   **`deck.js`**: Managed by the `Deck` class. It handles the generation of standard 52-card sets and shuffling algorithms.
 *   **`table_games.js`**: The base engine and acts as an orchestrator.
 *   **`ui_elements.js`**: Decouples the logic from the DOM. .
 
