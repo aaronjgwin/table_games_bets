@@ -39,7 +39,7 @@ The application is built on a modular, object-oriented JavaScript framework desi
 
 ### Core Class Structure
 *   **`deck.js`**: Managed by the `Deck` class. It handles the generation of standard 52-card sets and shuffling algorithms.
-*   **`table_games.js`**: The base engine and acts as an orchestrator.
+*   **`table_games.js`**: The base engine and acts as an orchestrator. It holds the global config and base code for the hand, cardGroup, & result classes.
 *   **`ui_elements.js`**: Decouples the logic from the DOM. .
 
 ### Hand Evaluation Logic
@@ -54,7 +54,6 @@ The engine uses specialized evaluators to process game-specific win conditions:
 
 ### Configuration Modules
 The system is highly extensible through configuration files like `EzBac.js`, `TexasHoldem.js`, and `HeadsUpHoldem.js`. These files inject specific payout odds and side-bet rules (like Dragon 7 or Panda 8) into the core engine without modifying the base classes.
-
 
 ## 🤝 Contributing
 
