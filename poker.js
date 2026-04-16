@@ -325,7 +325,7 @@ function playBlackjack(playersHand, dealersHand) {
                 break;
         }
         // End player turn immediately on a Blackjack
-        if(playersHand.isBlackjack || dealersHand.isBlackjack){ return; }
+        if(playersHand.isBlackjack || dealersHand.isBlackjack || (decision=='Split' && playersHand.isFirstCardAce)){ return; }
     }
 
     // Dealer turn: If player hasn't busted, dealer draws according to house rules (Soft 17/Hard 16)
